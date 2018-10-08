@@ -76,51 +76,6 @@
                 android:orientation="horizontal">
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/mapcardviev2"
-                    android:layout_width="350dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="10dp"
-                    android:clickable="true"
-                    android:foreground="?android:attr/selectableItemBackground">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="10dp"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:background="@drawable/mapa"
-                            android:padding="10dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="-60dp"
-                            android:text="Zgłoś nie ekologiczne \n         zachowanie"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="40dp"
-                            android:layout_gravity="center"
-                            android:textSize="20dp"/>
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <android.support.v7.widget.CardView
                     android:id="@+id/mapcardviev1"
                     android:layout_width="350dp"
                     android:layout_height="100dp"
@@ -136,22 +91,22 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="10dp"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
-                            android:background="@drawable/map4"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/mapa"
                             android:padding="10dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="-50dp"
-                            android:text="Zgłoś usterke"
-                            android:layout_marginLeft="30dp"
-                            android:textStyle="bold"
                             android:layout_gravity="center"
-                            android:textSize="20dp"/>
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="-60dp"
+                            android:text="Zgłoś nie ekologiczne \n         zachowanie"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
@@ -166,7 +121,7 @@
                 android:orientation="horizontal">
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/mapcardviev"
+                    android:id="@+id/mapcardviev2"
                     android:layout_width="350dp"
                     android:layout_height="100dp"
                     android:layout_margin="10dp"
@@ -181,22 +136,67 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_gravity="left"
-                            android:layout_marginLeft="10dp"
                             android:layout_width="80dp"
                             android:layout_height="80dp"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/map4"
+                            android:padding="10dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="-50dp"
+                            android:text="Zgłoś usterke"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/histcard"
+                    android:layout_width="350dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:clickable="true"
+                    android:foreground="?android:attr/selectableItemBackground">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:layout_gravity="left"
+                            android:layout_marginLeft="10dp"
                             android:background="@drawable/map3"
                             android:padding="10dp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="-50dp"
-                            android:layout_marginLeft="30dp"
-                            android:text="Przegląd zgłoszeń"
-                            android:textStyle="bold"
                             android:layout_gravity="center"
-                            android:textSize="20dp"/>
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="-50dp"
+                            android:text="Przegląd zgłoszeń"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
 
                     </LinearLayout>
                 </android.support.v7.widget.CardView>

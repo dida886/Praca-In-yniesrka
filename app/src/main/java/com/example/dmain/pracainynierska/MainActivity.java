@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import android.support.v7.widget.CardView;
 import android.util.Log;
 
@@ -16,8 +17,8 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-public class MainActivity extends AppCompatActivity {
-    private CardView histcard, bmicard, addexcard, mapcard, myresult;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private CardView map1, map2, hist;
 
     private static final String TAG = "MainActivity";
 
@@ -32,7 +33,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        map1= (CardView)findViewById(R.id.mapcardviev1);
+        map2 = (CardView)findViewById(R.id.mapcardviev2);
+        hist = (CardView)findViewById(R.id.histcard);
 
+        map1.setOnClickListener(this);
+        map2.setOnClickListener(this);
+        hist.setOnClickListener(this);
+
+    }
+    public void onClick(View v) {
+
+        Intent i;
+
+        switch (v.getId()) {
+
+            case R.id.mapcardviev1: i = new Intent(this, MapsActivity.class);startActivity(i); break;
+            case R.id.mapcardviev2: i = new Intent(this, MapsActivity.class);startActivity(i); break;
+            case R.id.histcard: i = new Intent(this, MapsActivity.class);startActivity(i); break;
+
+            default: break;
+
+        }
     }
 }
 
