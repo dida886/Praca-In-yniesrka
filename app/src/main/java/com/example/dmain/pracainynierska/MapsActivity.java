@@ -1,7 +1,20 @@
 package com.example.dmain.pracainynierska;
 
+import android.Manifest;
+import android.app.Dialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -22,7 +35,11 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.maps.model.RoundCap;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
@@ -37,6 +54,10 @@ public class MapsActivity extends AppCompatActivity
         OnMapReadyCallback,
         GoogleMap.OnPolylineClickListener,
         GoogleMap.OnPolygonClickListener {
+
+
+    Dialog myDialog;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
 
     private static final int COLOR_BLACK_ARGB = 0xff000000;
     private static final int COLOR_WHITE_ARGB = 0xffffffff;
@@ -65,6 +86,7 @@ public class MapsActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        myDialog = new Dialog(this);
         super.onCreate(savedInstanceState);
 
         // Retrieve the content view that renders the map.
@@ -83,11 +105,11 @@ public class MapsActivity extends AppCompatActivity
      * In this tutorial, we add polylines and polygons to represent routes and areas on the map.
      */
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(final GoogleMap googleMap) {
 
         // Add polylines to the map.
         // Polylines are useful to show a route or some other connection between points.
-        Polygon polyline1 = googleMap.addPolygon(new PolygonOptions()
+        Polygon polygon1 = googleMap.addPolygon(new PolygonOptions()
                 .clickable(true)
                 .add(
                         new LatLng(        	50.8966097	,	18.3996026	),
@@ -218,9 +240,20 @@ public class MapsActivity extends AppCompatActivity
 
 
                 // Store a data object with the polyline, used here to indicate an arbitrary type.
-        polyline1.setTag("A");
+        polygon1.setTag("A");
         // Style the polyline.
-        stylePolygon(polyline1);
+        stylePolygon(polygon1);
+
+
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener()
+        {
+            @Override
+            public void onMapClick(LatLng arg0)
+            {
+                Toast.makeText(getApplicationContext(), "Miejsce znajduje się po za granicą", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
 
 
@@ -277,7 +310,7 @@ public class MapsActivity extends AppCompatActivity
 
         List<PatternItem> pattern = null;
         int strokeColor = COLOR_BLACK_ARGB;
-        int fillColor = COLOR_WHITE_ARGB;
+        //int fillColor = COLOR_WHITE_ARGB;
 
         switch (type) {
             // If no type is given, allow the API to use the default.
@@ -285,20 +318,20 @@ public class MapsActivity extends AppCompatActivity
                 // Apply a stroke pattern to render a dashed line, and define colors.
                 pattern = PATTERN_POLYGON_ALPHA;
                 strokeColor = COLOR_GREEN_ARGB;
-                fillColor = COLOR_PURPLE_ARGB;
+                //fillColor = COLOR_PURPLE_ARGB;
                 break;
             case "beta":
                 // Apply a stroke pattern to render a line of dots and dashes, and define colors.
                 pattern = PATTERN_POLYGON_BETA;
                 strokeColor = COLOR_ORANGE_ARGB;
-                fillColor = COLOR_BLUE_ARGB;
+               // fillColor = COLOR_BLUE_ARGB;
                 break;
         }
 
         polygon.setStrokePattern(pattern);
         polygon.setStrokeWidth(POLYGON_STROKE_WIDTH_PX);
         polygon.setStrokeColor(strokeColor);
-        polygon.setFillColor(fillColor);
+        //polygon.setFillColor(fillColor);
     }
 
     /**
@@ -326,11 +359,51 @@ public class MapsActivity extends AppCompatActivity
     @Override
     public void onPolygonClick(Polygon polygon) {
         // Flip the values of the red, green, and blue components of the polygon's color.
-        int color = polygon.getStrokeColor() ^ 0x00ffffff;
-        polygon.setStrokeColor(color);
-        color = polygon.getFillColor() ^ 0x00ffffff;
-        polygon.setFillColor(color);
 
-        Toast.makeText(this, "Area type " + polygon.getTag().toString(), Toast.LENGTH_SHORT).show();
+        myDialog.setContentView(R.layout.popup_map);
+        FloatingActionButton takePictureButton= myDialog.findViewById(R.id.floatingActionButton);
+
+        takePictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MapsActivity.this, CameraActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            takePictureButton.setEnabled(false);
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            myDialog.show();
+
+
+
+       // Toast.makeText(this, "Area type " + polygon.getTag().toString(), Toast.LENGTH_SHORT).show();
     }
 }
