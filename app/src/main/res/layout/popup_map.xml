@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="300dp"
     android:layout_height="400dp"
@@ -8,18 +9,71 @@
     android:padding="5dp"
     android:layout_gravity="center">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
+
+    <EditText
+        android:id="@+id/txt_Title"
+        android:layout_width="285dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="Temat"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        android:maxLength="30"/>
+    <EditText
+        android:id="@+id/txt_Description"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="10dp"
+        android:shadowColor="#7F000000"
+        android:shadowDx="-2"
+        android:shadowDy="-2"
+        android:shadowRadius="1"
+        android:text="Opis..."
+        android:textColor="#ff9e9e9e"
+        android:maxLength="196"/>
+
+    <Button
+        android:id="@+id/btn_select_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="340dp"
+        android:layout_marginEnd="10dp"
+        android:text="Wstaw zdjęcie" />
+
+    <Button
+        android:id="@+id/btn_aply"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/btn_select_photo"
+
+
+        android:layout_marginTop="340dp"
+        android:layout_marginRight="-129dp"
+        android:text="Wyślij" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="120dp"
-        android:layout_marginBottom="25dp"
-        android:clickable="true"
-        app:backgroundTint="@color/browser_actions_title_color"
-        app:srcCompat="@drawable/camera_icon"
-        android:onClick="takePic"/>
+        android:layout_marginEnd="114dp"
+        android:layout_marginBottom="13dp"
+        app:srcCompat="?attr/colorBackgroundFloating" />
+
+
 </RelativeLayout>
 
 
