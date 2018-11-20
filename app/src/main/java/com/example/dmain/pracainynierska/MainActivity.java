@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.mapcardviev1: i = new Intent(this, MapsActivity.class);startActivity(i); break;
             case R.id.mapcardviev2: i = new Intent(this, MapsActivity.class);startActivity(i); break;
-            case R.id.histcard: i = new Intent(this, MapsActivity.class);startActivity(i); break;
+            case R.id.histcard: i = new Intent(this, Isue_History.class);startActivity(i); break;
 
             default: break;
 
