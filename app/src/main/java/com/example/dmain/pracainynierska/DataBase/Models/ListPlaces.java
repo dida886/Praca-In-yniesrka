@@ -1,6 +1,8 @@
 package com.example.dmain.pracainynierska.DataBase.Models;
 
 
+import android.icu.text.SimpleDateFormat;
+
 /**
  * Created by dmain on 28.03.2018.
  */
@@ -11,11 +13,11 @@ public class ListPlaces {
     private long Data;
     private String Adres;
     private String Opis;
-    private String Image;
+    private int Image;
     private int Id;
 
 
-    public ListPlaces(int id, String title, long data, String adres, String opis, String image) {
+    public ListPlaces(int id, String title, long data, String adres, String opis, int image) {
         this.Title = title;
         this.Id = id;
         this.Data = data;
@@ -24,11 +26,11 @@ public class ListPlaces {
         this.Image = image;
     }
 
-    public String getImage() {
+    public int getImage() {
         return Image;
     }
 
-    public void setImage(String image) {
+    public void setImage(int image) {
         Image = image;
     }
 
@@ -76,6 +78,12 @@ public class ListPlaces {
 
 
         return String.format(String.valueOf(this.Title));
+    }
+    public String getMyDate(){
+
+        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+        return String.format(formatter.format(this.Data));
+
     }
 }
 

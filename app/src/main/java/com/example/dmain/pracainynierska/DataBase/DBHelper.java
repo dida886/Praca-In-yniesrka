@@ -9,8 +9,8 @@ import com.example.dmain.pracainynierska.DataBase.Tabels.PlacesTable;
 
 
 public class DBHelper  extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 61;
-    private static final String DATABASE_NAME = "GYMFIT2.db";
+    private static final int DATABASE_VERSION = 2;
+    private static final String DATABASE_NAME = "PLACES.db";
     private static final String TAG = DBHelper.class.getSimpleName();
 
     public DBHelper(Context context) {

@@ -35,11 +35,11 @@ public class PlacesTable {
                 + DATA_COL + " LONG,"
                 + ADRES_COL + " TEXT,"
                 + OPIS_COL + " TEXT,"
-                + IMAGE_COL + " INTEGER" +
+                + IMAGE_COL + " INT" +
                 ")";
     }
     public static void insertPredefinedData(){
-        PlacesTable.insert(new ListPlaces(1, "Szkodliwy dym z kumina", 12122018,"Wiejska 60, Olesno","U sąsiada wydobywa się szkodliwy dym, Nie można oddychać",null));
+        PlacesTable.insert(new ListPlaces(1, "Szkodliwy dym z komina", 12122018,"Wiejska 60, Olesno","U sąsiada wydobywa się szkodliwy dym, Nie można oddychać",R.drawable.dym));
 
     }
 
@@ -52,7 +52,7 @@ public class PlacesTable {
         contentValues.put(TITLE_COL, le.getTitle());
         contentValues.put(ADRES_COL, le.getAdres());
         contentValues.put(OPIS_COL, le.getOpis());
-        contentValues.put(DATA_COL, le.getData());
+        contentValues.put(DATA_COL, le.getMyDate());
         contentValues.put(IMAGE_COL, le.getImage());
 
         int id = (int)db.insert(TABLE_NAME, null, contentValues);
@@ -75,9 +75,9 @@ public class PlacesTable {
             int id = cursor.getInt(cursor.getColumnIndex(PlacesTable.ID_COL));
             String Title = cursor.getString(cursor.getColumnIndex(PlacesTable.TITLE_COL));
             String Adres = cursor.getString(cursor.getColumnIndex(PlacesTable.ADRES_COL));
-            long Data = cursor.getLong(cursor.getColumnIndex(PlacesTable.DATA_COL));
+            Long Data = cursor.getLong(cursor.getColumnIndex(PlacesTable.DATA_COL));
             String Opiss = cursor.getString(cursor.getColumnIndex(PlacesTable.OPIS_COL));
-            String image = cursor.getString(cursor.getColumnIndex(PlacesTable.IMAGE_COL));
+            int image = cursor.getInt(cursor.getColumnIndex(PlacesTable.IMAGE_COL));
 
 
 

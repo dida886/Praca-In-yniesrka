@@ -403,7 +403,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Integer.parseInt(mydate),
                             newEntryAdres,
                             newEntryDescrip,
-                            null
+                            1
 
                     );
                     PlacesTable.insert(p);
