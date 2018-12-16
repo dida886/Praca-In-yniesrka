@@ -8,6 +8,7 @@ import com.example.dmain.pracainynierska.R;
 import com.example.dmain.pracainynierska.DataBase.DatabaseManager;
 import com.example.dmain.pracainynierska.DataBase.Models.ListPlaces;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -31,11 +32,15 @@ public class PlacesTable {
         return "CREATE TABLE " + TABLE_NAME + " ("
                 + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TITLE_COL + " TEXT,"
-                + DATA_COL + " TEXT,"
+                + DATA_COL + " LONG,"
                 + ADRES_COL + " TEXT,"
                 + OPIS_COL + " TEXT,"
                 + IMAGE_COL + " INTEGER" +
                 ")";
+    }
+    public static void insertPredefinedData(){
+        PlacesTable.insert(new ListPlaces(1, "Szkodliwy dym z kumina", 12122018,"Wiejska 60, Olesno","U sąsiada wydobywa się szkodliwy dym, Nie można oddychać",null));
+
     }
 
 
@@ -60,7 +65,7 @@ public class PlacesTable {
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
-        ArrayList<ListPlaces> result = new ArrayList<ListPlaces>();
+        ArrayList<ListPlaces> result = new ArrayList<>();
 
         if (cursor.getCount() == 0) {
             return result;
@@ -70,15 +75,15 @@ public class PlacesTable {
             int id = cursor.getInt(cursor.getColumnIndex(PlacesTable.ID_COL));
             String Title = cursor.getString(cursor.getColumnIndex(PlacesTable.TITLE_COL));
             String Adres = cursor.getString(cursor.getColumnIndex(PlacesTable.ADRES_COL));
-            String Data = cursor.getString(cursor.getColumnIndex(PlacesTable.DATA_COL));
-            String Opis = cursor.getString(cursor.getColumnIndex(PlacesTable.OPIS_COL));
+            long Data = cursor.getLong(cursor.getColumnIndex(PlacesTable.DATA_COL));
+            String Opiss = cursor.getString(cursor.getColumnIndex(PlacesTable.OPIS_COL));
             String image = cursor.getString(cursor.getColumnIndex(PlacesTable.IMAGE_COL));
 
 
-            String image = new String(bytes,UTF_8);
-            byte[] bytes = image.getBytes(UTF_8);
 
-            result.add(new ListPlaces(id,Title,Adres,Data,Opis,bytes));
+
+
+            result.add(new ListPlaces(id,Title,Data,Adres,Opiss,image));
         }
 
         cursor.close();

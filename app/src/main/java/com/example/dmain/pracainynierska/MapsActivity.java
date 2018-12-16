@@ -32,6 +32,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.dmain.pracainynierska.DataBase.Models.ListPlaces;
+import com.example.dmain.pracainynierska.DataBase.Tabels.PlacesTable;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -50,7 +52,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -69,7 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public Dialog myDialog;
    public EditText title , description , adressTxt;
 
-
+    ListPlaces p;
 
 
     private Marker marker;
@@ -339,6 +343,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         myDialog.setContentView(R.layout.popup_map);
 
     Button takePictureButton = myDialog.findViewById(R.id.btn_select_photo);
+    Button btnAplly = myDialog.findViewById(R.id.btn_aply);
     final EditText title = myDialog.findViewById(R.id.txt_Title);
     final EditText description = myDialog.findViewById(R.id.txt_Description);
     final TextView adressTxt = myDialog.findViewById(R.id.txt_adress);
@@ -373,6 +378,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         takePictureButton.setEnabled(false);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
     }
+
+        btnAplly.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+
+                String newEntryTile = title.getText().toString();
+                String newEntryDescrip = description.getText().toString();
+                String newEntryAdres = adressTxt.getText().toString();
+
+
+                Date date = new Date();
+                SimpleDateFormat formatter = new SimpleDateFormat("ddMyyyy");
+                String mydate = formatter.format(date);
+
+
+                if (title.length() != 0 && description.length() != 0) {
+                    ListPlaces p = new ListPlaces(
+                            -1,
+                            newEntryTile,
+                            Integer.parseInt(mydate),
+                            newEntryAdres,
+                            newEntryDescrip,
+                            null
+
+                    );
+                    PlacesTable.insert(p);
+                    title.setText("");
+                    description.setText("");
+                    Intent refresh = new Intent(getApplicationContext(), MapsActivity.class);
+                    startActivity(refresh);//Start the same Activity
+                    finish(); //finish Activity.
+                    myDialog.dismiss();
+
+
+                } else {
+                    Toast.makeText(myDialog.getContext(), "Wszystkie pola muszą być wypełnione", Toast.LENGTH_LONG).show();
+                }
+
+            }
+
+        });
 
     myDialog.show();
     }

@@ -1,9 +1,9 @@
 package com.example.dmain.pracainynierska.DataBase;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
+        import android.database.sqlite.SQLiteDatabase;
+        import android.database.sqlite.SQLiteOpenHelper;
+        import android.util.Log;
 
 import com.example.dmain.pracainynierska.DataBase.Tabels.PlacesTable;
 
@@ -28,7 +28,6 @@ public class DBHelper  extends SQLiteOpenHelper {
         Log.d(TAG, String.format("SQLiteDatabase.onUpgrade(%d -> %d)", oldVersion, newVersion));
 
         db.execSQL("DROP TABLE IF EXISTS " + PlacesTable.TABLE_NAME);
-
 
         onCreate(db);
     }

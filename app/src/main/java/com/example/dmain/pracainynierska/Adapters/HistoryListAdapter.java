@@ -17,24 +17,16 @@ import com.example.dmain.pracainynierska.R;
 
 import java.util.List;
 
-import yuku.ambilwarna.AmbilWarnaDialog;
 
-import static java.lang.Integer.valueOf;
 
 public class HistoryListAdapter extends BaseAdapter {
 
-    private Context mContex;
+    Context mContex;
 
-    private List<ListPlaces> eProduct;
-    int [] Colors;
-    int[] Icon;
+   List<ListPlaces> eProduct;
 
-
-    public HistoryListAdapter(Context mContex,  List<ListPlaces> eProduct, int[] icon) {
+    public HistoryListAdapter(Context mContex,  List<ListPlaces> eProduct) {
         this.mContex = mContex;
-
-        this.Icon= icon;
-        /*this.Colors=Colors;*/
         this.eProduct = eProduct;
 
     }
@@ -42,42 +34,43 @@ public class HistoryListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return eProduct.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return eProduct.get(i);
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(int i) {
 
-        return position;
+        return i;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int i, View convertView, ViewGroup parent) {
 
 
         View v = View.inflate(mContex, R.layout.history_adapter, null);
         TextView tvTitle = (TextView)v.findViewById(R.id.tytul_adapter);
         TextView tvData = (TextView)v.findViewById(R.id.data_adapter);
         TextView tvAdres = (TextView)v.findViewById(R.id.adres_adapter);
-
+        TextView tvOpis = (TextView)v.findViewById(R.id.OPISTV);
 
         ImageView tvImage1= v.findViewById(R.id.imageView2);
 
         //Set text for TextView
-        tvTitle.setText(String.valueOf(eProduct.get(position).getTitle()));
-        tvData.setText(String.valueOf(eProduct.get(position).getData()));
-        tvAdres.setText(String.valueOf(eProduct.get(position).getAdres()));
+        tvTitle.setText(String.valueOf(eProduct.get(i).getTitle()));
+        tvData.setText(String.valueOf(eProduct.get(i).getData()));
+        tvAdres.setText(String.valueOf(eProduct.get(i).getAdres()));
+        tvOpis.setText(String.valueOf(eProduct.get(i).getOpis()));
 
         //tvImage1.setImageResource(Bitmap.valueOf(eProduct.get(position).getImage()));
 
 
         //Save product id to tag
-        v.setTag(String.valueOf(eProduct.get(position).getId()));
+        v.setTag(String.valueOf(eProduct.get(i).getId()));
         return v;
     }
 }

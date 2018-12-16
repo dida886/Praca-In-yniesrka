@@ -1,6 +1,5 @@
 package com.example.dmain.pracainynierska.DataBase.Models;
 
-import android.graphics.Bitmap;
 
 /**
  * Created by dmain on 28.03.2018.
@@ -9,14 +8,14 @@ import android.graphics.Bitmap;
 public class ListPlaces {
 
     private String Title;
-    private String Data;
+    private long Data;
     private String Adres;
     private String Opis;
-    private Byte Image;
+    private String Image;
     private int Id;
 
 
-    public ListPlaces(int id, String title, String data, String adres, String opis, Byte image) {
+    public ListPlaces(int id, String title, long data, String adres, String opis, String image) {
         this.Title = title;
         this.Id = id;
         this.Data = data;
@@ -25,11 +24,11 @@ public class ListPlaces {
         this.Image = image;
     }
 
-    public Byte getImage() {
+    public String getImage() {
         return Image;
     }
 
-    public void setImage(Byte image) {
+    public void setImage(String image) {
         Image = image;
     }
 
@@ -41,11 +40,11 @@ public class ListPlaces {
         Title = title;
     }
 
-    public String getData() {
+    public long getData() {
         return Data;
     }
 
-    public void setData(String data) {
+    public void setData(long data) {
         Data = data;
     }
 
