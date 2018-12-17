@@ -52,6 +52,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,7 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
 
     private ImageView ivImage;
-
+    byte[] byteArray;
     private String userChoosenTask;
     private GoogleMap mMap;
 
@@ -84,6 +86,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public String city;
     public String knownName;
     public String state,postalCode,country;
+    String str ;
 
 
     @Override
@@ -247,57 +250,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 double Lng =  Double.parseDouble(sLng);
 
                 for (Polygon pObj : polyList) {
-
                     //find Polygon user tapped inside of
                     if (PolyUtil.containsLocation(point, pObj.getPoints(), false)) {
                         //first case, no Marker
                         if (marker == null) {
-
                             //Add Marker to current Polygon
-                            if ( isInternetAvailable()==true )
-                            {
-                                marker = mMap.addMarker(new MarkerOptions()
-                                        .position(point)
-                                        .title("Zgłoś tutaj")
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-
-                                Log.v("Marker", "ADDing first Marker");
-                                getAddress(Lat, Lng);
-
-                                break;
-                            }
-                            else {
-
-                                Toast.makeText(getApplicationContext(), "Błąd sieci, Spróbuj ponownie!", Toast.LENGTH_SHORT).show();
-                            }
-                        } else if (PolyUtil.containsLocation(marker.getPosition(), pObj.getPoints(), false)) {
+                            marker = mMap.addMarker(new MarkerOptions()
+                                    .position(point)
+                                    .title("Zgłoś tutaj")
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                            Log.v("Marker", "ADDing first Marker");
+                            getAddress(Lat,Lng);
+                            break;
+                        }
+                        else if (PolyUtil.containsLocation(marker.getPosition(), pObj.getPoints(), false)) {
                             //Marker exists already in a different Polygon
                             //remove Marker from previous Polygon
                             marker.remove();
                             //Add Marker to current Polygon
-                            if ( isInternetAvailable()==true )
-                            {
-                                marker = mMap.addMarker(new MarkerOptions()
-                                        .position(point)
-                                        .title("test")
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
-
-                                Log.v("Marker", "Moving Marker to new Polygon");
-
-                                getAddress(Lat, Lng);
-                                break;
-                            }
-                            else {
-
-                                Toast.makeText(getApplicationContext(), "Błąd sieci, Spróbuj ponownie!", Toast.LENGTH_SHORT).show();
-                            }
+                            marker = mMap.addMarker(new MarkerOptions()
+                                    .position(point)
+                                    .title("test")
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                            Log.v("Marker", "Moving Marker to new Polygon");
+                            getAddress(Lat,Lng);
+                            break;
                         }
-
-                    } else {
+                    }
+                    else{
                         Toast.makeText(getApplicationContext(), "Miejsce znajduje się po za granicą", Toast.LENGTH_SHORT).show();
                     }
                 }
-
 
 
             }
@@ -330,7 +313,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "Problem z siecią", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -348,7 +331,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     final EditText description = myDialog.findViewById(R.id.txt_Description);
     final TextView adressTxt = myDialog.findViewById(R.id.txt_adress);
 
-    adressTxt.setText(address+knownName);
+    adressTxt.setText(address);
 
 
 
@@ -427,6 +410,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
         switch (requestCode) {
             case Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -495,7 +479,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void onCaptureImageResult(Intent data) {
-        ivImage = myDialog.findViewById(R.id.imageView);
+
+        ivImage = myDialog.findViewById(R.id.img_ok);
 
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -504,36 +489,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
 
+
         FileOutputStream fo;
         try {
             destination.createNewFile();
             fo = new FileOutputStream(destination);
             fo.write(bytes.toByteArray());
             fo.close();
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         ivImage.setImageBitmap(thumbnail);
+
+
     }
 
-    @SuppressWarnings("deprecation")
+
     private void onSelectFromGalleryResult(Intent data) {
-        ivImage = myDialog.findViewById(R.id.imageView);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img_ok);
+
         Bitmap bm = null;
         if (data != null) {
             try {
                 bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byteArray = stream.toByteArray();
+                str = new String(byteArray, StandardCharsets.UTF_8);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
         if (bm != null) {
-            ivImage.setImageBitmap(bitmap);
+
         }
 
 

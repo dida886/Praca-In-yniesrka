@@ -32,14 +32,14 @@ public class PlacesTable {
         return "CREATE TABLE " + TABLE_NAME + " ("
                 + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + TITLE_COL + " TEXT,"
-                + DATA_COL + " LONG,"
+                + DATA_COL + " TEXT,"
                 + ADRES_COL + " TEXT,"
                 + OPIS_COL + " TEXT,"
                 + IMAGE_COL + " INT" +
                 ")";
     }
     public static void insertPredefinedData(){
-        PlacesTable.insert(new ListPlaces(1, "Szkodliwy dym z komina", 12122018,"Wiejska 60, Olesno","U sąsiada wydobywa się szkodliwy dym, Nie można oddychać",R.drawable.dym));
+        PlacesTable.insert(new ListPlaces(1, "Szkodliwy dym z kumina", 12122018,"Wiejska 60, Olesno","U sąsiada wydobywa się szkodliwy dym, Nie można oddychać",R.drawable.dym));
 
     }
 
@@ -52,7 +52,7 @@ public class PlacesTable {
         contentValues.put(TITLE_COL, le.getTitle());
         contentValues.put(ADRES_COL, le.getAdres());
         contentValues.put(OPIS_COL, le.getOpis());
-        contentValues.put(DATA_COL, le.getMyDate());
+        contentValues.put(DATA_COL, le.getData());
         contentValues.put(IMAGE_COL, le.getImage());
 
         int id = (int)db.insert(TABLE_NAME, null, contentValues);
@@ -75,7 +75,7 @@ public class PlacesTable {
             int id = cursor.getInt(cursor.getColumnIndex(PlacesTable.ID_COL));
             String Title = cursor.getString(cursor.getColumnIndex(PlacesTable.TITLE_COL));
             String Adres = cursor.getString(cursor.getColumnIndex(PlacesTable.ADRES_COL));
-            Long Data = cursor.getLong(cursor.getColumnIndex(PlacesTable.DATA_COL));
+            int Data = cursor.getInt(cursor.getColumnIndex(PlacesTable.DATA_COL));
             String Opiss = cursor.getString(cursor.getColumnIndex(PlacesTable.OPIS_COL));
             int image = cursor.getInt(cursor.getColumnIndex(PlacesTable.IMAGE_COL));
 

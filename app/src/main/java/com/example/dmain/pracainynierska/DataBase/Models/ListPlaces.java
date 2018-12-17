@@ -10,14 +10,14 @@ import android.icu.text.SimpleDateFormat;
 public class ListPlaces {
 
     private String Title;
-    private long Data;
+    private int Data;
     private String Adres;
     private String Opis;
     private int Image;
     private int Id;
 
 
-    public ListPlaces(int id, String title, long data, String adres, String opis, int image) {
+    public ListPlaces(int id, String title, int data, String adres, String opis, int image) {
         this.Title = title;
         this.Id = id;
         this.Data = data;
@@ -42,11 +42,11 @@ public class ListPlaces {
         Title = title;
     }
 
-    public long getData() {
+    public int getData() {
         return Data;
     }
 
-    public void setData(long data) {
+    public void setData(int data) {
         Data = data;
     }
 
@@ -85,6 +85,7 @@ public class ListPlaces {
         return String.format(formatter.format(this.Data));
 
     }
+
 }
 
 

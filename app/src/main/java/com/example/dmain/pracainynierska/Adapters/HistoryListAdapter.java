@@ -63,7 +63,7 @@ public class HistoryListAdapter extends BaseAdapter {
 
         //Set text for TextView
         tvTitle.setText(String.valueOf(eProduct.get(i).getTitle()));
-        tvData.setText(String.valueOf(eProduct.get(i).getMyDate()));
+        tvData.setText(String.valueOf(eProduct.get(i).getData()));
         tvAdres.setText(String.valueOf("Adres: "+eProduct.get(i).getAdres()));
         tvOpis.setText(String.valueOf(eProduct.get(i).getOpis()));
 

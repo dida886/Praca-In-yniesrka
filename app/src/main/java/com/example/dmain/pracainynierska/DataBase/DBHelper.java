@@ -9,7 +9,7 @@ import com.example.dmain.pracainynierska.DataBase.Tabels.PlacesTable;
 
 
 public class DBHelper  extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String DATABASE_NAME = "PLACES.db";
     private static final String TAG = DBHelper.class.getSimpleName();
 
