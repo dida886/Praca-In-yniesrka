@@ -5,7 +5,8 @@ import android.content.Context;
 
 import com.example.dmain.pracainynierska.DataBase.DBHelper;
 import com.example.dmain.pracainynierska.DataBase.DatabaseManager;
-import com.example.dmain.pracainynierska.DataBase.Tabels.PlacesTable;
+import com.example.dmain.pracainynierska.DataBase.Tabels.EkologiaTable;
+import com.example.dmain.pracainynierska.DataBase.Tabels.UsterkaTable;
 
 
 public class App extends Application {
@@ -19,8 +20,11 @@ public class App extends Application {
         dbHelper = new DBHelper(context);
         DatabaseManager.initializeInstance(dbHelper);
 
-        if (PlacesTable.getAll().size() == 0){
-            PlacesTable.insertPredefinedData();
+        if (EkologiaTable.getAll().size() == 0){
+            EkologiaTable.insertPredefinedData();
+        }
+        if (UsterkaTable.getAll().size() == 0){
+            UsterkaTable.insertPredefinedData();
         }
     }
 

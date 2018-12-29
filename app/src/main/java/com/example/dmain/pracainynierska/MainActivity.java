@@ -1,21 +1,13 @@
 package com.example.dmain.pracainynierska;
 
-import android.app.ActionBar;
-import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import android.support.v7.widget.CardView;
-import android.util.Log;
 
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Toast;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private CardView map1, map2, hist;
@@ -48,9 +40,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()) {
 
-            case R.id.mapcardviev1: i = new Intent(this, MapsActivity.class);startActivity(i); break;
-            case R.id.mapcardviev2: i = new Intent(this, MapsActivity.class);startActivity(i); break;
-            case R.id.histcard: i = new Intent(this, Isue_History.class);startActivity(i); break;
+            case R.id.mapcardviev1: i = new Intent(this, MapsActivityEkologia.class);startActivity(i); break;
+            case R.id.mapcardviev2: i = new Intent(this, MapsActivityUsterka.class);startActivity(i); break;
+            case R.id.histcard: i = new Intent(this, ChooseTableActivity.class);startActivity(i); break;
 
             default: break;
 

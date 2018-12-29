@@ -5,11 +5,12 @@ import android.content.Context;
         import android.database.sqlite.SQLiteOpenHelper;
         import android.util.Log;
 
-import com.example.dmain.pracainynierska.DataBase.Tabels.PlacesTable;
+import com.example.dmain.pracainynierska.DataBase.Tabels.EkologiaTable;
+import com.example.dmain.pracainynierska.DataBase.Tabels.UsterkaTable;
 
 
 public class DBHelper  extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 9;
     private static final String DATABASE_NAME = "PLACES.db";
     private static final String TAG = DBHelper.class.getSimpleName();
 
@@ -19,7 +20,8 @@ public class DBHelper  extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(PlacesTable.createTable());
+        db.execSQL(EkologiaTable.createTable());
+        db.execSQL(UsterkaTable.createTable());
 
     }
 
@@ -27,7 +29,8 @@ public class DBHelper  extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d(TAG, String.format("SQLiteDatabase.onUpgrade(%d -> %d)", oldVersion, newVersion));
 
-        db.execSQL("DROP TABLE IF EXISTS " + PlacesTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + EkologiaTable.TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + UsterkaTable.TABLE_NAME);
 
         onCreate(db);
     }

@@ -1,7 +1,6 @@
 package com.example.dmain.pracainynierska;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -10,13 +9,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -24,6 +21,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,8 +30,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.dmain.pracainynierska.DataBase.Models.ListPlaces;
-import com.example.dmain.pracainynierska.DataBase.Tabels.PlacesTable;
+import com.example.dmain.pracainynierska.DataBase.Models.UsterkaModels;
+import com.example.dmain.pracainynierska.DataBase.Tabels.UsterkaTable;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -52,8 +50,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,7 +60,7 @@ import java.util.Locale;
  * An activity that displays a Google map with polylines to represent paths or routes,
  * and polygons to represent areas.
  */
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, GoogleMap.OnPolygonClickListener {
+public class MapsActivityUsterka extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener, GoogleMap.OnPolygonClickListener {
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
 
     private ImageView ivImage;
@@ -75,7 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public Dialog myDialog;
    public EditText title , description , adressTxt;
 
-    ListPlaces p;
+   UsterkaModels u;
 
 
     private Marker marker;
@@ -92,7 +88,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps);
+        setContentView(R.layout.activity_maps2);
+        getSupportActionBar().setTitle("Zgłoś usterkę");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -294,7 +291,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Set Address
         try {
-             Geocoder geocoder = new Geocoder(MapsActivity.this, Locale.getDefault());
+             Geocoder geocoder = new Geocoder(MapsActivityUsterka.this, Locale.getDefault());
             List<Address> addresses = geocoder.getFromLocation(Lat, Lng, 1);
             if (addresses != null && addresses.size() > 0) {
 
@@ -321,9 +318,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void popupMap(String address, String knownName){
 
-        final Dialog myDialog = new Dialog(MapsActivity.this);
+        final Dialog myDialog = new Dialog(MapsActivityUsterka.this);
 
-        myDialog.setContentView(R.layout.popup_map);
+        myDialog.setContentView(R.layout.popup_usterka);
 
     Button takePictureButton = myDialog.findViewById(R.id.btn_select_photo);
     Button btnAplly = myDialog.findViewById(R.id.btn_aply);
@@ -380,7 +377,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
                 if (title.length() != 0 && description.length() != 0) {
-                    ListPlaces p = new ListPlaces(
+                    UsterkaModels u = new UsterkaModels(
                             -1,
                             newEntryTile,
                             Integer.parseInt(mydate),
@@ -389,10 +386,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             1
 
                     );
-                    PlacesTable.insert(p);
+                    UsterkaTable.insert(u);
                     title.setText("");
                     description.setText("");
-                    Intent refresh = new Intent(getApplicationContext(), MapsActivity.class);
+                    Intent refresh = new Intent(getApplicationContext(), MapsActivityUsterka.class);
                     startActivity(refresh);//Start the same Activity
                     finish(); //finish Activity.
                     myDialog.dismiss();
@@ -429,12 +426,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final CharSequence[] items = {"Zrób zdjęcie", "Wybierz z galerii",
                 "Wstecz"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivityUsterka.this);
         builder.setTitle("Dodaj zdjęcie!");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                boolean result = Utility.checkPermission(MapsActivity.this);
+                boolean result = Utility.checkPermission(MapsActivityUsterka.this);
 
                 if (items[item].equals("Zrób zdjęcie")) {
                     userChoosenTask = "Zrób zdjęcie";
@@ -480,7 +477,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void onCaptureImageResult(Intent data) {
 
-        ivImage = myDialog.findViewById(R.id.img_ok);
+        //ivImage = myDialog.findViewById(R.id.img_ok);
 
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -502,7 +499,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ivImage.setImageBitmap(thumbnail);
+       // ivImage.setImageBitmap(thumbnail);
 
 
     }
@@ -517,8 +514,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bm.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byteArray = stream.toByteArray();
-                str = new String(byteArray, StandardCharsets.UTF_8);
+
+
 
             } catch (IOException e) {
                 e.printStackTrace();

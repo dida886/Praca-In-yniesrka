@@ -1,18 +1,15 @@
 package com.example.dmain.pracainynierska.Adapters;
 
-import android.graphics.Bitmap;
 import android.widget.BaseAdapter;
 
 import android.content.Context;
-import android.graphics.drawable.Icon;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.example.dmain.pracainynierska.DataBase.Models.ListPlaces;
+import com.example.dmain.pracainynierska.DataBase.Models.EkologiaModels;
 import com.example.dmain.pracainynierska.R;
 
 import java.util.List;
@@ -20,13 +17,13 @@ import java.util.List;
 import static java.lang.Integer.valueOf;
 
 
-public class HistoryListAdapter extends BaseAdapter {
+public class EkologiaAdapter extends BaseAdapter {
 
     Context mContex;
 
-   List<ListPlaces> eProduct;
+   List<EkologiaModels> eProduct;
 
-    public HistoryListAdapter(Context mContex,  List<ListPlaces> eProduct) {
+    public EkologiaAdapter(Context mContex, List<EkologiaModels> eProduct) {
         this.mContex = mContex;
         this.eProduct = eProduct;
 
@@ -53,7 +50,7 @@ public class HistoryListAdapter extends BaseAdapter {
     public View getView(int i, View convertView, ViewGroup parent) {
 
 
-        View v = View.inflate(mContex, R.layout.history_adapters, null);
+        View v = View.inflate(mContex, R.layout.ekologia_adapter, null);
         TextView tvTitle = (TextView)v.findViewById(R.id.tytul_adapter);
         TextView tvData = (TextView)v.findViewById(R.id.data_adapter);
         TextView tvAdres = (TextView)v.findViewById(R.id.adres_adapter);

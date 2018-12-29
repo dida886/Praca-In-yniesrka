@@ -7,7 +7,7 @@ import android.icu.text.SimpleDateFormat;
  * Created by dmain on 28.03.2018.
  */
 
-public class ListPlaces {
+public class EkologiaModels {
 
     private String Title;
     private int Data;
@@ -17,7 +17,7 @@ public class ListPlaces {
     private int Id;
 
 
-    public ListPlaces(int id, String title, int data, String adres, String opis, int image) {
+    public EkologiaModels(int id, String title, int data, String adres, String opis, int image) {
         this.Title = title;
         this.Id = id;
         this.Data = data;

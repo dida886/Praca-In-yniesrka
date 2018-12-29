@@ -2,24 +2,20 @@ package com.example.dmain.pracainynierska.DataBase.Tabels;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 
 import com.example.dmain.pracainynierska.R;
 import com.example.dmain.pracainynierska.DataBase.DatabaseManager;
-import com.example.dmain.pracainynierska.DataBase.Models.ListPlaces;
+import com.example.dmain.pracainynierska.DataBase.Models.EkologiaModels;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * Created by dmain on 21.03.2018.
  */
 
-public class PlacesTable {
+public class EkologiaTable {
 
-    public static final String TABLE_NAME = "LIST_PLACES";
+    public static final String TABLE_NAME = "EKOLOGIA_TABLE";
 
     private static final String ID_COL = "ID";
     private static final String TITLE_COL = "TITLE";
@@ -39,13 +35,13 @@ public class PlacesTable {
                 ")";
     }
     public static void insertPredefinedData(){
-        PlacesTable.insert(new ListPlaces(1, "Szkodliwy dym z kumina", 12122018,"Wiejska 60, Olesno","U sąsiada wydobywa się szkodliwy dym, Nie można oddychać",R.drawable.dym));
+        EkologiaTable.insert(new EkologiaModels(1, "Szkodliwy dym z komina", 12122018,"Młyńska 56, Olesno","U sąsiada wydobywa się szkodliwy dym, Nie można oddychać",R.drawable.dym));
 
     }
 
 
 
-    public static int insert(ListPlaces le) {
+    public static int insert(EkologiaModels le) {
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
 
         ContentValues contentValues = new ContentValues();
@@ -61,29 +57,29 @@ public class PlacesTable {
         return id;
     }
 
-    public static ArrayList<ListPlaces> getAll() {
+    public static ArrayList<EkologiaModels> getAll() {
         SQLiteDatabase db = DatabaseManager.getInstance().openDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
-        ArrayList<ListPlaces> result = new ArrayList<>();
+        ArrayList<EkologiaModels> result = new ArrayList<>();
 
         if (cursor.getCount() == 0) {
             return result;
         }
 
         while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndex(PlacesTable.ID_COL));
-            String Title = cursor.getString(cursor.getColumnIndex(PlacesTable.TITLE_COL));
-            String Adres = cursor.getString(cursor.getColumnIndex(PlacesTable.ADRES_COL));
-            int Data = cursor.getInt(cursor.getColumnIndex(PlacesTable.DATA_COL));
-            String Opiss = cursor.getString(cursor.getColumnIndex(PlacesTable.OPIS_COL));
-            int image = cursor.getInt(cursor.getColumnIndex(PlacesTable.IMAGE_COL));
+            int id = cursor.getInt(cursor.getColumnIndex(EkologiaTable.ID_COL));
+            String Title = cursor.getString(cursor.getColumnIndex(EkologiaTable.TITLE_COL));
+            String Adres = cursor.getString(cursor.getColumnIndex(EkologiaTable.ADRES_COL));
+            int Data = cursor.getInt(cursor.getColumnIndex(EkologiaTable.DATA_COL));
+            String Opiss = cursor.getString(cursor.getColumnIndex(EkologiaTable.OPIS_COL));
+            int image = cursor.getInt(cursor.getColumnIndex(EkologiaTable.IMAGE_COL));
 
 
 
 
 
-            result.add(new ListPlaces(id,Title,Data,Adres,Opiss,image));
+            result.add(new EkologiaModels(id,Title,Data,Adres,Opiss,image));
         }
 
         cursor.close();
